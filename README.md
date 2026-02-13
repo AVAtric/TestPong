@@ -1,95 +1,154 @@
-# TestPong - Terminal Pong Game
+# PongClaw 🏓
 
-A classic Pong game implemented in Python with a terminal UI.
+A terminal-based Pong game written in Python. Play against a simple AI opponent!
 
 ## Features
 
-- Terminal-based graphics using ANSI escape codes
-- Player paddle controls with W/S keys (Up/Down arrow keys also supported)
-- Simple AI opponent that tracks the ball
-- Ball physics with wall bounces and paddle deflections
-- Score tracking with first to 7 wins
-- Game states: playing, paused, and game over
-- Restart and quit functionality
+- **Terminal UI**: Classic Pong rendered in your terminal using curses
+- **Player vs AI**: Competitive AI that's challenging but beatable
+- **Smooth gameplay**: 60 FPS rendering with responsive controls
+- **Score tracking**: First to 7 points wins
+- **Pause/Resume**: Take a break anytime with the P key
 
 ## Installation
 
-1. Create and activate the virtual environment:
 ```bash
+# Clone or navigate to the project
 cd TestPong
+
+# Create and activate virtual environment (if not already done)
 python3 -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-```
 
-2. Install the package:
-```bash
+# Install in development mode
 pip install -e .
+
+# Install dev dependencies for testing
+pip install -e ".[dev]"
 ```
 
-## Controls
+## How to Play
 
-- **W / Up Arrow**: Move player paddle up
-- **S / Down Arrow**: Move player paddle down
-- **P**: Pause/Unpause game
-- **R**: Restart game (after game over)
-- **Q**: Quit game (after game over)
+### Running the Game
 
-## Running the Game
-
-### Using the module entry point:
 ```bash
+# Method 1: Run as a module (recommended)
 python3 -m pongclaw
-```
 
-### Using the console script:
-```bash
+# Method 2: Run the game script directly
+python3 pongclaw/game.py
+
+# Method 3: If installed, use the command
 pongclaw
 ```
 
-## Project Structure
+### Controls
+
+**Player Paddle (Left):**
+- `W` or `↑` - Move up
+- `S` or `↓` - Move down
+
+**Game Controls:**
+- `P` - Pause/Resume
+- `Q` - Quit game
+
+**After Game Over:**
+- `R` - Restart
+- `Q` - Quit
+
+### Gameplay
+
+- Your paddle is on the **left** side
+- AI paddle is on the **right** side
+- Ball bounces off top and bottom walls
+- Hitting the ball with different parts of your paddle changes its angle
+- First player to **7 points** wins!
+- The AI has intentional imperfections to keep it beatable
+
+## Development
+
+### Project Structure
 
 ```
 TestPong/
-├── pongclaw/          # Main package
+├── pongclaw/           # Main package
+│   ├── __init__.py     # Package initialization
+│   ├── __main__.py     # Entry point for python -m pongclaw
+│   ├── entities.py     # Paddle and Ball classes
+│   └── game.py         # Main game loop and rendering
+├── tests/              # Test suite
 │   ├── __init__.py
-│   ├── __main__.py    # Entry point
-│   ├── game_state.py  # Game state dataclass
-│   └── pong_game.py   # Main game logic
-├── tests/             # Test directory
-├── .venv/            # Virtual environment
-├── setup.py          # Package setup
-└── README.md         # This file
+│   └── test_game.py    # Unit tests
+├── .venv/              # Virtual environment
+├── setup.py            # Package configuration
+├── README.md           # This file
+└── .gitignore          # Git ignore rules
 ```
 
-## Testing
-
-Run the test suite using pytest:
+### Running Tests
 
 ```bash
-cd TestPong
+# Activate virtual environment first
 source .venv/bin/activate
-pytest tests/ -v
+
+# Run all tests with pytest
+python3 -m pytest -v
+
+# Run tests quietly
+python3 -m pytest -q
+
+# Run with coverage
+python3 -m pytest --cov=pongclaw tests/
 ```
 
-or with quiet mode:
+### Test Coverage
 
-```bash
-pytest tests/ -q
-```
-
-## Game Rules
-
-1. The ball bounces off the top and bottom walls
-2. The ball bounces off player and AI paddles
-3. Hitting the paddle changes the ball's angle slightly
-4. The first player to reach 7 points wins
-5. Game over screen allows restarting or quitting
+The test suite includes:
+- **Paddle movement**: Up/down movement and boundary constraints
+- **Collision detection**: Paddle hit detection
+- **Ball physics**: Movement, wall bounces, paddle bounces
+- **Angle mechanics**: Ball trajectory changes based on paddle hit position
+- **Scoring logic**: Reset behavior after scoring
 
 ## Technical Details
 
-- Terminal resolution: 80x24 characters
-- Paddle size: 2 columns wide, 6 rows high
-- Ball speed increases slightly after each paddle hit
-- AI has a slight delay for beatability
-- Uses Python's `termios` and `tty` modules for terminal control
-- ANSI escape codes for colors and cursor control
+- **Language**: Python 3.10+
+- **UI Library**: curses (built-in)
+- **Testing**: pytest
+- **Code Style**: PEP 8 compliant
+- **Frame Rate**: ~60 FPS
+
+## Tips & Tricks
+
+- The ball's angle changes based on where it hits your paddle
+- Hit the ball with the top/bottom of your paddle for sharper angles
+- The AI occasionally "misses" on purpose - exploit this!
+- Use the pause feature (`P`) to take a breather during intense matches
+
+## Known Limitations
+
+- Requires a terminal with curses support (most Unix-like systems)
+- Minimum terminal size recommended: 80x24
+- Colors may vary depending on your terminal theme
+
+## License
+
+Created by OpenClaw coding agent. Free to use and modify!
+
+## Troubleshooting
+
+**Game doesn't display correctly:**
+- Ensure your terminal window is large enough (at least 80x24)
+- Try resizing your terminal window
+
+**Keyboard controls not responsive:**
+- Make sure the game window has focus
+- Check that your terminal supports the curses library
+
+**AI is too hard/easy:**
+- The AI difficulty is controlled by the tracking probability in `game.py`
+- Current setting: 70% accuracy (adjustable in code)
+
+---
+
+Enjoy the game! 🎮
