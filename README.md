@@ -4,7 +4,7 @@ A terminal-based Pong game written in Python. Play against a simple AI opponent!
 <div align="center">
 <pre>
    ╔═╗╔═╗╔╗╔╔═╗
-  ╠═╝║ ║║║║║ ╦
+   ╠═╝║ ║║║║║ ╦
    ╩  ╚═╝╝╚╝╚═╝
    ╔═╗╦  ╔═╗╦ ╦
    ║  ║  ╠═╣║ ║
